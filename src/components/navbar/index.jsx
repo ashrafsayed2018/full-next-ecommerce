@@ -1,15 +1,15 @@
 "use client";
 import { GlobalContext } from "@/context";
-import { adminNavOptions, navOptions, styles } from "@/utlis";
+import { adminNavOptions, navOptions } from "@/utlis";
 import { useContext } from "react";
 import CommonModal from "../commonModal";
+import Cookies from "js-cookie";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
-const isAdminView = false;
-const isAuthUser = true;
-const user = {
-  role: "admin",
-};
-function NavItems({ isModalView = false }) {
+// const isAdminView = false;
+
+function NavItems({ isModalView = false, isAdminView, router }) {
   return (
     <div
       className={`w-full md:w-auto md:flex items-center justify-between ${
@@ -25,6 +25,7 @@ function NavItems({ isModalView = false }) {
         {isAdminView
           ? adminNavOptions.map((item) => (
               <li
+                onClick={() => router.push(item.path)}
                 className="cursor-pointer bolck py-2 pl-3 pr-4 text-gray-900 rounded md:p-0"
                 key={item.id}
               >
@@ -35,6 +36,7 @@ function NavItems({ isModalView = false }) {
               <li
                 className="cursor-pointer bolck py-2 pl-3 pr-4 text-gray-900 rounded md:p-0"
                 key={item.id}
+                onClick={() => router.push(item.path)}
               >
                 {item.label}
               </li>
@@ -44,16 +46,40 @@ function NavItems({ isModalView = false }) {
   );
 }
 export default function Navbar() {
-  const { showNavModal, setShowNavModal } = useContext(GlobalContext);
+  const {
+    showNavModal,
+    setShowNavModal,
+    user,
+    setUser,
+    isAuthUser,
+    setIsAuthUser,
+  } = useContext(GlobalContext);
+  const router = useRouter();
+  const pathName = usePathname();
+  const isAdminView = pathName.includes("/admin-view");
+  console.log(`isAdminView ${isAdminView}`);
+
+  // handle logout events
+
+  const handleLogout = () => {
+    setIsAuthUser(false);
+    setUser({});
+    Cookies.remove("token");
+    localStorage.clear();
+    router.push("/");
+  };
   return (
     <>
       <nav className="w-full h-20 bg-white fixed top-0 left-0 z-20 border-b border-gray-200">
         <div className="max-w-screen-xl flex flex-wrap justify-between item-center mx-auto p-4">
           {/* website logo */}
           <div className="flex items-center cursor-pointer">
-            <span className="self-center text-2xl font-semibold whitespace-nowrap">
+            <Link
+              href="/"
+              className="self-center text-2xl font-semibold whitespace-nowrap"
+            >
               Shoppery
-            </span>
+            </Link>
           </div>
           {/*  */}
           <div className="flex md:order-2 gap-2">
@@ -63,15 +89,33 @@ export default function Navbar() {
                 <button className="navButton">Cart</button>
               </>
             ) : null}
-            {user.role == "admin" && isAdminView ? (
-              <button className="navButton">Client view</button>
-            ) : (
-              <button className="navButton">Admin view</button>
-            )}
+
+            {user?.role === "admin" ? (
+              isAdminView ? (
+                <button onClick={() => router.push("/")} className="navButton">
+                  Client view
+                </button>
+              ) : (
+                <button
+                  onClick={() => router.push("/admin-view")}
+                  className="navButton"
+                >
+                  Admin view
+                </button>
+              )
+            ) : null}
+
             {isAuthUser ? (
-              <button className="navButton">Logout</button>
+              <button className="navButton" onClick={handleLogout}>
+                Logout
+              </button>
             ) : (
-              <button className="navButton">Login</button>
+              <button
+                className="navButton"
+                onClick={() => router.push("/login")}
+              >
+                Login
+              </button>
             )}
             {/* mobile menu button */}
             <button
@@ -119,11 +163,17 @@ export default function Navbar() {
               )}
             </button>
           </div>
-          <NavItems />
+          <NavItems isAdminView={isAdminView} router={router} />
         </div>
       </nav>
       <CommonModal
-        mainContent={<NavItems isModalView={true} />}
+        mainContent={
+          <NavItems
+            isModalView={true}
+            isAdminView={isAdminView}
+            router={router}
+          />
+        }
         showModalTitle={false}
         show={showNavModal}
         setShow={setShowNavModal}
