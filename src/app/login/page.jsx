@@ -5,7 +5,7 @@ import { GlobalContext } from "@/context";
 import TextLoader from "@/components/loader/textLoader";
 import Notifications from "@/components/Notifications/index";
 import { loginUserService } from "@/services/login";
-import { loginFormControls } from "@/utlis";
+import { loginFormControls } from "@/utils";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";

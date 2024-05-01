@@ -1,6 +1,6 @@
 "use client";
 import { GlobalContext } from "@/context";
-import { adminNavOptions, navOptions } from "@/utlis";
+import { adminNavOptions, navOptions } from "@/utils";
 import { useContext } from "react";
 import CommonModal from "../commonModal";
 import Cookies from "js-cookie";
@@ -9,7 +9,7 @@ import Link from "next/link";
 
 // const isAdminView = false;
 
-function NavItems({ isModalView = false, isAdminView, router }) {
+function NavItems({ isModalView = false, isAdminView, router, pathName }) {
   return (
     <div
       className={`w-full md:w-auto md:flex items-center justify-between ${
@@ -26,7 +26,9 @@ function NavItems({ isModalView = false, isAdminView, router }) {
           ? adminNavOptions.map((item) => (
               <li
                 onClick={() => router.push(item.path)}
-                className="cursor-pointer bolck py-2 pl-3 pr-4 text-gray-900 rounded md:p-0"
+                className={`cursor-pointer bolck py-2 pl-3 pr-4 text-gray-900 rounded md:p-3 ${
+                  pathName == item.path ? "bg-blue-800 text-white py-20" : ""
+                }`}
                 key={item.id}
               >
                 {item.label}
@@ -57,7 +59,6 @@ export default function Navbar() {
   const router = useRouter();
   const pathName = usePathname();
   const isAdminView = pathName.includes("/admin-view");
-  console.log(`isAdminView ${isAdminView}`);
 
   // handle logout events
 
@@ -163,7 +164,11 @@ export default function Navbar() {
               )}
             </button>
           </div>
-          <NavItems isAdminView={isAdminView} router={router} />
+          <NavItems
+            isAdminView={isAdminView}
+            router={router}
+            pathName={pathName}
+          />
         </div>
       </nav>
       <CommonModal
@@ -172,6 +177,7 @@ export default function Navbar() {
             isModalView={true}
             isAdminView={isAdminView}
             router={router}
+            pathName={pathName}
           />
         }
         showModalTitle={false}

@@ -5,7 +5,7 @@ import TextLoader from "@/components/loader/textLoader";
 import Notifications from "@/components/Notifications/index";
 import { GlobalContext } from "@/context";
 import { registerUserService } from "@/services/register";
-import { registrationFormControls } from "@/utlis";
+import { registrationFormControls } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
