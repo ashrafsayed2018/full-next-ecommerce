@@ -4,7 +4,14 @@ export default function TileComponent({ data, selected = [], onClick }) {
       {data.map((dataItem) => (
         <label
           key={dataItem.id}
-          className="cursor-pointer rounded-lg border border-black px-6 py-2 font-bold"
+          onClick={() => onClick(dataItem)}
+          className={`cursor-pointer rounded-lg border border-black px-6 py-2 font-bold ${
+            selected &&
+            selected.length &&
+            selected.map((item) => item.id).indexOf(dataItem.id) !== -1
+              ? "bg-black text-white"
+              : ""
+          }`}
         >
           {dataItem.label}
         </label>

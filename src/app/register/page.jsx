@@ -2,9 +2,9 @@
 import InputComponent from "@/components/formElements/inputComponent";
 import SelectComponent from "@/components/formElements/selectComponent";
 import TextLoader from "@/components/loader/textLoader";
-import Notifications from "@/components/Notifications/index";
+import Notifications from "@/components/toastNotification/index";
 import { GlobalContext } from "@/context";
-import { registerUserService } from "@/services/register";
+import { registerUserService } from "@/services/auth/register";
 import { registrationFormControls } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
