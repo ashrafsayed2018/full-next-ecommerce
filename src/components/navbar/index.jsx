@@ -7,8 +7,6 @@ import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
-// const isAdminView = false;
-
 function NavItems({ isModalView = false, isAdminView, router, pathName }) {
   return (
     <div

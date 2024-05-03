@@ -9,6 +9,9 @@
   .button {
     @apply inline-flex w-full items-center justify-center bg-black px-6 py-4 text-lg text-white transition-all duration-300 ease-in-out focus:shadow-lg font-medium uppercase tracking-wide;
   }
+  .card-button {
+    @apply w-full flex mt-1.5 justify-center bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white;
+  }
 }
 
 /* scroll bar style */
