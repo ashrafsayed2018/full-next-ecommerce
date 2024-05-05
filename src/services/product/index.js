@@ -8,7 +8,7 @@ export async function addNewProductService(formData) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${Cookies.get("token")}`,
+        Authorization: `Bearer ${Cookies.get("token")}`,
       },
       body: JSON.stringify(formData),
     });
@@ -45,7 +45,7 @@ export async function updateProductService(formData) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${Cookies.get("token")}`,
+        Authorization: `Bearer ${Cookies.get("token")}`,
       },
       body: JSON.stringify(formData),
     });
@@ -69,7 +69,7 @@ export async function deleteProductService(id) {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${Cookies.get("token")}`,
+          Authorization: `Bearer ${Cookies.get("token")}`,
         },
       }
     );

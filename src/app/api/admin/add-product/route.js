@@ -1,4 +1,5 @@
 import connectToDb from "@/database";
+import { AuthUser } from "@/authUser/AuthUser";
 import Product from "@/models/product";
 import Joi from "joi";
 import { NextResponse } from "next/server";
@@ -18,9 +19,9 @@ export const dynamic = "force-dynamic";
 connectToDb();
 export async function POST(req) {
   try {
-    const user = "admin";
+    const authenticatedUser = await AuthUser(req);
 
-    if (user === "admin") {
+    if (authenticatedUser?.role === "admin") {
       const extractedData = await req.json();
       const {
         name,
@@ -33,7 +34,6 @@ export async function POST(req) {
         priceDrop,
         imageUrl,
       } = extractedData;
-      console.log(extractedData, "route page");
 
       const { error } = addNewProductSchema.validate({
         name,

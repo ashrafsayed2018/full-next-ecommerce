@@ -1,4 +1,5 @@
 import { BASE_API_URL } from "@/utils/constants";
+import Cookies from "js-cookie";
 
 export const loginUserService = async (formData) => {
   try {
@@ -7,6 +8,7 @@ export const loginUserService = async (formData) => {
       headers: {
         "Content-Type": "application/json",
         accept: "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
       },
       body: JSON.stringify(formData),
     });
