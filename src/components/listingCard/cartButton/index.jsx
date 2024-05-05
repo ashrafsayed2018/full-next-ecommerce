@@ -1,5 +1,6 @@
 import TextLoader from "@/components/loader/textLoader";
 import { GlobalContext } from "@/context";
+import { addToCart } from "@/services/cart";
 import { deleteProductService } from "@/services/product";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
@@ -8,7 +9,7 @@ import { toast } from "react-toastify";
 export default function CardButton({ item }) {
   const pathName = usePathname();
   const isAdminView = pathName.includes("/admin-view");
-  const { loader, setLoader } = useContext(GlobalContext);
+  const { loader, setLoader, user } = useContext(GlobalContext);
 
   const router = useRouter();
   const createQueryString = (name, value) => {
@@ -27,6 +28,20 @@ export default function CardButton({ item }) {
 
       toast.success(response.message);
       router.refresh();
+    } else {
+      setLoader({ loading: false, id: "" });
+      toast.error(response.message);
+    }
+  }
+  async function handleAddToCart(product) {
+    setLoader({ loading: true, id: product._id });
+    const response = await addToCart({
+      productID: product._id,
+      userID: user.id,
+    });
+    if (response.success) {
+      toast.success(response.message);
+      setLoader({ loading: false, id: "" });
     } else {
       setLoader({ loading: false, id: "" });
       toast.error(response.message);
@@ -63,6 +78,12 @@ export default function CardButton({ item }) {
       </button>
     </>
   ) : (
-    <button className="card-button">Add to Card</button>
+    <button className="card-button" onClick={() => handleAddToCart(item)}>
+      {loader && loader.loading && loader.id == item._id ? (
+        <TextLoader text="adding to cart ..." loading={loader} color="white" />
+      ) : (
+        "Add to Card"
+      )}
+    </button>
   );
 }
