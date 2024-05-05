@@ -10,6 +10,7 @@ export default function GlobalState({ children }) {
   const [loader, setLoader] = useState(false);
   // authentication state
   const [isAuthUser, setIsAuthUser] = useState(false);
+
   // user state
   const [user, setUser] = useState(null);
 

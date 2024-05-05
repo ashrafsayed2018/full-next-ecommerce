@@ -1,10 +1,9 @@
-import { number } from "joi";
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
     name: String,
-    Description: String,
+    description: String,
     price: Number,
     category: String,
     sizes: Array,

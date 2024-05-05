@@ -33,6 +33,7 @@ export async function POST(req) {
         priceDrop,
         imageUrl,
       } = extractedData;
+      console.log(extractedData, "route page");
 
       const { error } = addNewProductSchema.validate({
         name,
@@ -52,7 +53,7 @@ export async function POST(req) {
         });
       }
 
-      // create new product
+      //create new product
       const newProduct = await Product.create(extractedData);
 
       if (newProduct) {
