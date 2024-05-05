@@ -9,7 +9,8 @@ import { toast } from "react-toastify";
 export default function CardButton({ item }) {
   const pathName = usePathname();
   const isAdminView = pathName.includes("/admin-view");
-  const { loader, setLoader, user } = useContext(GlobalContext);
+  const { loader, setLoader, user, showCartModal, setShowCartModal } =
+    useContext(GlobalContext);
 
   const router = useRouter();
   const createQueryString = (name, value) => {
@@ -25,7 +26,6 @@ export default function CardButton({ item }) {
 
     if (response.success) {
       setLoader({ loading: false, id: "" });
-
       toast.success(response.message);
       router.refresh();
     } else {
@@ -41,8 +41,10 @@ export default function CardButton({ item }) {
     });
     if (response.success) {
       toast.success(response.message);
+      setShowCartModal(true);
       setLoader({ loading: false, id: "" });
     } else {
+      setShowCartModal(true);
       setLoader({ loading: false, id: "" });
       toast.error(response.message);
     }

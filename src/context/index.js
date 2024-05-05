@@ -6,6 +6,7 @@ export const GlobalContext = createContext(null);
 
 export default function GlobalState({ children }) {
   const [showNavModal, setShowNavModal] = useState(false);
+  const [showCartModal, setShowCartModal] = useState(false);
   // loader state
   const [loader, setLoader] = useState(false);
   // authentication state
@@ -34,6 +35,8 @@ export default function GlobalState({ children }) {
         setIsAuthUser,
         user,
         setUser,
+        showCartModal,
+        setShowCartModal,
       }}
     >
       {children}

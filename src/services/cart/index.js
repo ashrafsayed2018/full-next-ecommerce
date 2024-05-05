@@ -1,8 +1,9 @@
+import { BASE_API_URL } from "@/utils/constants";
 import Cookies from "js-cookie";
 
 export async function addToCart(formData) {
   try {
-    const response = await fetch(`/api/cart/add-to-cart`, {
+    const response = await fetch(`${BASE_API_URL}/api/cart/add-to-cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
