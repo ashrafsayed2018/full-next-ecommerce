@@ -4,8 +4,7 @@ import mongoose from "mongoose";
 //   useNewUrlParser: true,
 // };
 const connectToDb = async () => {
-  const connectionUrl =
-    "mongodb+srv://nextjsecom:password1984@cluster0.0xfexvu.mongodb.net/ecommerce";
+  const connectionUrl = process.env.MONGO_URL;
   mongoose
     .connect(connectionUrl)
     .then(() => console.log("your are connected man"))

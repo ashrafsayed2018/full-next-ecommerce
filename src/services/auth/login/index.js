@@ -1,6 +1,8 @@
+import { BASE_API_URL } from "@/utils/constants";
+
 export const loginUserService = async (formData) => {
   try {
-    const response = await fetch("/api/auth/login", {
+    const response = await fetch(`${BASE_API_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

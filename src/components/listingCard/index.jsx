@@ -7,7 +7,6 @@ import { useEffect } from "react";
 
 export default function ListingCard({ allProducts }) {
   const router = useRouter();
-  console.log(allProducts, "listing card page");
   useEffect(() => router.refresh(), [router]);
   return (
     <section className="bg-white py-12 sm:py-16">
@@ -18,7 +17,6 @@ export default function ListingCard({ allProducts }) {
               <article
                 className="relative flex flex-col overflow-hidden border cursor-pointer"
                 key={index}
-                onClick={() => router.push(`/product/${item._id}`)}
               >
                 <CardTile item={item} />
                 <CardButton item={item} />

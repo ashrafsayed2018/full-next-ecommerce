@@ -1,7 +1,13 @@
+import { useRouter } from "next/navigation";
+
 export default function CardTile({ item }) {
+  const router = useRouter();
   return (
     <>
-      <div className="overflow-hidden h-96 aspect-video">
+      <div
+        className="overflow-hidden h-96 aspect-video"
+        onClick={() => router.push(`/product/${item._id}`)}
+      >
         <img
           src={item.imageUrl}
           alt={item.name}

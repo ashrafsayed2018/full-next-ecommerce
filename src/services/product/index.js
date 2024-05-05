@@ -1,9 +1,10 @@
+import { BASE_API_URL } from "@/utils/constants";
 import Cookies from "js-cookie";
 import { NextResponse } from "next/server";
 
 export async function addNewProductService(formData) {
   try {
-    const response = await fetch("/api/admin/add-product", {
+    const response = await fetch(`${BASE_API_URL}/api/admin/add-product`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,17 +23,14 @@ export async function addNewProductService(formData) {
 
 export async function getAllAdminProducts() {
   try {
-    const response = await fetch(
-      "http://localhost:3000/api/admin/all-products",
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
+    const response = await fetch(`${BASE_API_URL}/api/admin/all-products`, {
+      method: "GET",
+      cache: "no-store",
+    });
     const data = await response.json();
     return data;
   } catch (error) {
-    return NextResponse({
+    return NextResponse.json({
       success: false,
       message: "something went wrong please try again later",
     });
@@ -43,7 +41,7 @@ export async function getAllAdminProducts() {
 
 export async function updateProductService(formData) {
   try {
-    const response = await fetch("/api/admin/update-product", {
+    const response = await fetch(`${BASE_API_URL}/api/admin/update-product`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -65,13 +63,16 @@ export async function updateProductService(formData) {
 
 export async function deleteProductService(id) {
   try {
-    const response = await fetch(`/api/admin/delete-product?id=${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${Cookies.get("token")}`,
-      },
-    });
+    const response = await fetch(
+      `${BASE_API_URL}/api/admin/delete-product?id=${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      }
+    );
 
     const data = await response.json();
     return data;
@@ -87,7 +88,7 @@ export async function deleteProductService(id) {
 export async function findProductsByCategoryService(category) {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/client/product/products-by-category?category=${category}`,
+      `${BASE_API_URL}/api/client/product/products-by-category?category=${category}`,
       {
         method: "GET",
         cache: "no-store",
@@ -104,7 +105,7 @@ export async function findProductsByCategoryService(category) {
 export async function findProductByIdService(id) {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/client/product/product-by-id?id=${id}`,
+      `${BASE_API_URL}/api/client/product/product-by-id?id=${id}`,
       {
         method: "GET",
         cache: "no-store",
