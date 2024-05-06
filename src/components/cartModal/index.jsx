@@ -8,6 +8,7 @@ export default function CartModal() {
   return (
     <CommonModal
       showButtons={true}
+      modalTitle={"hello world"}
       show={showCartModal}
       setShow={setShowCartModal}
       buttonComponent={
@@ -15,6 +16,13 @@ export default function CartModal() {
           <button>Go to Cart</button>
           <button>Checkout</button>
         </Fragment>
+      }
+      mainContent={
+        <>
+          <div>
+            <h1>hello world</h1>
+          </div>
+        </>
       }
     />
   );
