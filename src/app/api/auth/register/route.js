@@ -55,7 +55,6 @@ export async function POST(req) {
       }
     }
   } catch (error) {
-    console.log(`error in user registration: ${error.message}`);
     return NextResponse.json({
       success: false,
       message: "something went wrong please try again",

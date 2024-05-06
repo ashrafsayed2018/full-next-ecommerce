@@ -16,7 +16,6 @@ export async function GET(req) {
       });
     } else {
       const product = await Product.findById({ _id: productId });
-      console.log(product);
 
       if (product) {
         return NextResponse.json({

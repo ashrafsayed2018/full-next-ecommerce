@@ -61,8 +61,6 @@ export async function POST(req) {
 
     if (decodedToken && decodedToken.exp) {
       const expirationDate = new Date(decodedToken.exp * 1000); // Convert the expiration timestamp to a Date object
-      console.log("Token expiration date:", expirationDate);
-      console.log("this date", new Date(Date.now()));
     }
 
     const userData = {
@@ -80,7 +78,6 @@ export async function POST(req) {
       data: userData,
     });
   } catch (error) {
-    console.log(`error in user login: ${error.message}`);
     return NextResponse.json({
       success: false,
       message: "something went wrong please try again",

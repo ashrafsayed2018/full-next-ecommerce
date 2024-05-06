@@ -27,7 +27,6 @@ export async function POST(req) {
         });
       }
       const isCurrentCartItemExists = await Cart.find({ productID, userID });
-      console.log(`item is exists in cart`, isCurrentCartItemExists.length > 0);
       if (isCurrentCartItemExists.length > 0) {
         return NextResponse.json({
           success: false,

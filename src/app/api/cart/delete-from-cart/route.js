@@ -17,7 +17,7 @@ export async function DELETE(req) {
           message: "cart item not found",
         });
       }
-      const deleteCartItem = Cart.findByIdAndDelete(id);
+      const deleteCartItem = await Cart.findByIdAndDelete(id);
       if (!deleteCartItem) {
         return NextResponse.json({
           success: false,

@@ -20,12 +20,15 @@ export async function addToCart(formData) {
 
 export async function getAllCartItems(id) {
   try {
-    const response = await fetch(`/api/cart/all-cart-items?id=${id}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${Cookies.get("token")}`,
-      },
-    });
+    const response = await fetch(
+      `${BASE_API_URL}/api/cart/all-cart-items?id=${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -34,12 +37,15 @@ export async function getAllCartItems(id) {
 }
 export async function deleteFromCart(id) {
   try {
-    const response = await fetch(`/api/cart/delete-from-cart?id=${id}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${Cookies.get("token")}`,
-      },
-    });
+    const response = await fetch(
+      `${BASE_API_URL}/api/cart/delete-from-cart?id=${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {

@@ -8,7 +8,6 @@ connectToDb();
 export async function PUT(req) {
   try {
     const authenticatedUser = await AuthUser(req);
-    console.log(`authenticated user: ${authenticatedUser.role}`);
     if (authenticatedUser?.role === "admin") {
       const extractedData = await req.json();
       const {

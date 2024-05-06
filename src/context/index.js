@@ -14,6 +14,8 @@ export default function GlobalState({ children }) {
 
   // user state
   const [user, setUser] = useState(null);
+  // cart items state
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     if (Cookies.get("token") !== undefined) {
@@ -37,6 +39,8 @@ export default function GlobalState({ children }) {
         setUser,
         showCartModal,
         setShowCartModal,
+        cartItems,
+        setCartItems,
       }}
     >
       {children}

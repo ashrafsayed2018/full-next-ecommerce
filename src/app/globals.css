@@ -4,7 +4,7 @@
 
 @layer components {
   .navButton {
-    @apply mt-1.5 inline-block bg-black px-5 py-3 font-medium uppercase tracking-wide text-white;
+    @apply mt-1.5 w-full inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide;
   }
   .button {
     @apply inline-flex w-full items-center justify-center bg-black px-6 py-4 text-lg text-white transition-all duration-300 ease-in-out focus:shadow-lg font-medium uppercase tracking-wide;

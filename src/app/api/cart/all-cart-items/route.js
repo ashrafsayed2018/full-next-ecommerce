@@ -1,5 +1,6 @@
 import { AuthUser } from "@/authUser/AuthUser";
 import connectToDb from "@/database";
+import Cart from "@/models/cart";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -17,9 +18,9 @@ export async function GET(req) {
           message: "please login first",
         });
       }
-      const extractAllCartItems = await Cart.find({ userID: id })
-        .populate("userID")
-        .populate("productID");
+      const extractAllCartItems = await Cart.find({ userID: id }).populate(
+        "productID"
+      );
       if (extractAllCartItems) {
         return NextResponse.json({
           success: true,
