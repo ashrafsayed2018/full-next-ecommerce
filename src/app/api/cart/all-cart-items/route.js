@@ -1,6 +1,7 @@
 import { AuthUser } from "@/authUser/AuthUser";
 import connectToDb from "@/database";
 import Cart from "@/models/cart";
+import Product from "@/models/product";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -18,6 +19,7 @@ export async function GET(req) {
           message: "please login first",
         });
       }
+      await Product.find({});
       const extractAllCartItems = await Cart.find({ userID: id }).populate(
         "productID"
       );
