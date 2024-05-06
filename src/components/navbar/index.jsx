@@ -55,6 +55,7 @@ export default function Navbar() {
     isAuthUser,
     setIsAuthUser,
     showCartModal,
+    setShowCartModal,
   } = useContext(GlobalContext);
   const router = useRouter();
   const pathName = usePathname();
@@ -87,7 +88,12 @@ export default function Navbar() {
             {!isAdminView && isAuthUser ? (
               <>
                 <button className="navButton">Account</button>
-                <button className="navButton">Cart</button>
+                <button
+                  className="navButton"
+                  onClick={() => setShowCartModal((prev) => (prev = !prev))}
+                >
+                  Cart
+                </button>
               </>
             ) : null}
 

@@ -5,8 +5,10 @@ import { useContext, Fragment, useEffect } from "react";
 import { deleteFromCart, getAllCartItems } from "@/services/cart";
 import { toast } from "react-toastify";
 import TextLoader from "../loader/textLoader";
+import { useRouter } from "next/navigation";
 
 export default function CartModal() {
+  const router = useRouter();
   const {
     showCartModal,
     setShowCartModal,
@@ -16,15 +18,6 @@ export default function CartModal() {
     loader,
     setLoader,
   } = useContext(GlobalContext);
-
-  async function extractAllCartItems() {
-    const response = await getAllCartItems(user?.id);
-    if (response.success) {
-      setCartItems(response.data);
-      localStorage.setItem("cartItems", JSON.stringify(response.data));
-    } else {
-    }
-  }
 
   async function handleDeleteItem(id) {
     setLoader({ loading: true, id: id });
@@ -36,6 +29,14 @@ export default function CartModal() {
     } else {
       setLoader({ loading: false, id: "" });
       toast.error(response.message);
+    }
+  }
+  async function extractAllCartItems() {
+    const response = await getAllCartItems(user?.id);
+    if (response.success) {
+      setCartItems(response.data);
+      localStorage.setItem("cartItems", JSON.stringify(response.data));
+    } else {
     }
   }
   useEffect(() => {
@@ -51,7 +52,9 @@ export default function CartModal() {
       setShow={setShowCartModal}
       buttonComponent={
         <Fragment>
-          <button className="navButton">Go to Cart</button>
+          <button className="navButton" onClick={() => router.push("/cart")}>
+            Go to Cart
+          </button>
           <button
             className="navButton disabled:opacity-60 disabled:cursor-not-allowed"
             disabled={cartItems && cartItems.length == 0}
