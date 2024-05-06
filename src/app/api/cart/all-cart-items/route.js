@@ -36,7 +36,7 @@ export async function GET(req) {
     } else {
       return NextResponse.json({
         success: false,
-        message: "you are not authenticated",
+        message: "you are not authenticated bla bla bla bla bla bla bla bla",
       });
     }
   } catch (error) {

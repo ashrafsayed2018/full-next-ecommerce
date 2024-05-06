@@ -29,6 +29,7 @@ export async function getAllCartItems(id) {
         },
       }
     );
+    console.log("Authorization token", `${Cookies.get("token")}`);
     const data = await response.json();
     return data;
   } catch (error) {
