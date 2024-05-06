@@ -1,3 +1,4 @@
+import { getPriceAfterDiscount } from "@/helpers/priceAfterDiscount";
 import { useRouter } from "next/navigation";
 
 export default function CardTile({ item }) {
@@ -32,7 +33,7 @@ export default function CardTile({ item }) {
           </p>
           {item.onSale === "yes" ? (
             <p className="mr-3 font-semibold text-sm text-red-700">
-              {(item.price - item.price * (item.priceDrop / 100)).toFixed(2)}
+              {getPriceAfterDiscount(item)}
             </p>
           ) : null}
           {item.onSale === "yes" ? (

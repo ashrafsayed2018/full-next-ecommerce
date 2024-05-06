@@ -1,12 +1,13 @@
 "use client";
 import { GlobalContext } from "@/context";
 import { adminNavOptions, navOptions } from "@/utils";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import CommonModal from "../commonModal";
 import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import CartModal from "../cartModal";
+import { getAllCartItems } from "@/services/cart";
 
 function NavItems({ isModalView = false, isAdminView, router, pathName }) {
   return (
@@ -56,6 +57,7 @@ export default function Navbar() {
     setIsAuthUser,
     showCartModal,
     setShowCartModal,
+    setCartItems,
   } = useContext(GlobalContext);
   const router = useRouter();
   const pathName = usePathname();
@@ -70,6 +72,17 @@ export default function Navbar() {
     localStorage.clear();
     router.push("/");
   };
+  useEffect(() => {
+    async function extractAllCartItems() {
+      const response = await getAllCartItems(user?.id);
+      if (response.success) {
+        setCartItems(response.data);
+      } else {
+        return false;
+      }
+    }
+    extractAllCartItems();
+  }, [user]);
   return (
     <>
       <nav className="w-full h-20 bg-white fixed top-0 left-0 z-20 border-b border-gray-200">
@@ -93,6 +106,9 @@ export default function Navbar() {
                   onClick={() => setShowCartModal((prev) => (prev = !prev))}
                 >
                   Cart
+                  <span className="inline-flex ml-2 items-center justify-center text-white rounded-full w-4 h-4 bg-red-500 text-[10px]">
+                    {setCartItems.length}
+                  </span>
                 </button>
               </>
             ) : null}

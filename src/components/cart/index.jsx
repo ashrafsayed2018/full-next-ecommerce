@@ -1,4 +1,6 @@
+import { getPriceAfterDiscount } from "@/helpers/priceAfterDiscount";
 import TextLoader from "../loader/textLoader";
+import { getToatalCartPrice } from "@/helpers/getTotalCartPrice";
 
 export default function Cart({ cartItems = [], handleDeleteItem, loader }) {
   return (
@@ -31,7 +33,7 @@ export default function Cart({ cartItems = [], handleDeleteItem, loader }) {
                             </div>
                             <div className="mt-4 flex gap-3 items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
                               <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-1 sm:text-right sm:ml-8">
-                                {cartItem.productID.price}
+                                {getPriceAfterDiscount(cartItem.productID)}
                               </p>
                               <button
                                 type="button"
@@ -66,10 +68,7 @@ export default function Cart({ cartItems = [], handleDeleteItem, loader }) {
                   <p className="text-lg text-black font-semibold">
                     $
                     {cartItems && cartItems.length
-                      ? cartItems.reduce(
-                          (total, item) => item.productID.price + total,
-                          0
-                        )
+                      ? getToatalCartPrice(cartItems)
                       : 0}
                   </p>
                 </div>
@@ -84,10 +83,7 @@ export default function Cart({ cartItems = [], handleDeleteItem, loader }) {
                   <p className="text-lg text-black font-semibold">
                     $
                     {cartItems && cartItems.length
-                      ? cartItems.reduce(
-                          (total, item) => item.productID.price + total,
-                          0
-                        )
+                      ? getToatalCartPrice(cartItems)
                       : 0}
                   </p>
                 </div>

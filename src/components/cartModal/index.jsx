@@ -6,6 +6,7 @@ import { deleteFromCart, getAllCartItems } from "@/services/cart";
 import { toast } from "react-toastify";
 import TextLoader from "../loader/textLoader";
 import { useRouter } from "next/navigation";
+import { getPriceAfterDiscount } from "@/helpers/priceAfterDiscount";
 
 export default function CartModal() {
   const router = useRouter();
@@ -52,7 +53,13 @@ export default function CartModal() {
       setShow={setShowCartModal}
       buttonComponent={
         <Fragment>
-          <button className="navButton" onClick={() => router.push("/cart")}>
+          <button
+            className="navButton"
+            onClick={() => {
+              router.push("/cart");
+              setShowCartModal(false);
+            }}
+          >
             Go to Cart
           </button>
           <button
@@ -87,7 +94,7 @@ export default function CartModal() {
                       <a href="">{cartItem.productID.name}</a>
                     </div>
                     <p className="mt-1 text-sm text-gray-600">
-                      $ {cartItem.productID.price}
+                      $ {getPriceAfterDiscount(cartItem.productID)}
                     </p>
                   </div>
                   <div className="flex flex-1 items-end justify-between text-sm">
