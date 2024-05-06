@@ -84,7 +84,7 @@ export default function CardButton({ item }) {
       {loader && loader.loading && loader.id == item._id ? (
         <TextLoader text="adding to cart ..." loading={loader} color="white" />
       ) : (
-        "Add to Card"
+        "Add to Cart"
       )}
     </button>
   );

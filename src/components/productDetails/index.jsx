@@ -1,6 +1,31 @@
 "use client";
 
+import { useContext } from "react";
+import TextLoader from "../loader/textLoader";
+import { GlobalContext } from "@/context";
+import { toast } from "react-toastify";
+import { addToCart } from "@/services/cart";
+import Notifications from "@/components/toastNotification/index";
+
 export default function ProductDetails({ product }) {
+  const { loader, setLoader, setShowCartModal, user } =
+    useContext(GlobalContext);
+  async function handleAddToCart(product) {
+    setLoader({ loading: true, id: product._id });
+    const response = await addToCart({
+      productID: product._id,
+      userID: user.id,
+    });
+    if (response.success) {
+      toast.success(response.message);
+      setShowCartModal(true);
+      setLoader({ loading: false, id: "" });
+    } else {
+      setShowCartModal(true);
+      setLoader({ loading: false, id: "" });
+      toast.error(response.message);
+    }
+  }
   return (
     <section className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto px-4">
@@ -67,8 +92,22 @@ export default function ProductDetails({ product }) {
                   </p>
                 ) : null}
               </div>
-              <button type="button" className="button w-3/5">
+              {/* <button type="button" className="button w-3/5">
                 Add to cart
+              </button> */}
+              <button
+                className="card-button w-3/5"
+                onClick={() => handleAddToCart(product)}
+              >
+                {loader && loader.loading && loader.id == product._id ? (
+                  <TextLoader
+                    text="adding to cart ..."
+                    loading={loader}
+                    color="white"
+                  />
+                ) : (
+                  "Add to Cart"
+                )}
               </button>
             </div>
             <ul className="mt-8 space-y-2">
@@ -95,6 +134,7 @@ export default function ProductDetails({ product }) {
           </div>
         </div>
       </div>
+      <Notifications />
     </section>
   );
 }
