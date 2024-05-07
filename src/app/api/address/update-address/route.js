@@ -20,14 +20,14 @@ export async function PUT(req) {
       });
     } else {
       const updatedAdress = await Address.findOneAndUpdate(
-        { _id: id },
+        { _id: _id },
         { fullName, country, city, address, postalCode },
         { new: true }
       );
       if (updatedAdress) {
         return NextResponse.json({
           success: true,
-          data: updatedAdress,
+          message: "address updated successfully",
         });
       } else {
         return NextResponse.json({

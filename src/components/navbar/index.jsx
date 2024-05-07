@@ -72,17 +72,7 @@ export default function Navbar() {
     localStorage.clear();
     router.push("/");
   };
-  useEffect(() => {
-    async function extractAllCartItems() {
-      const response = await getAllCartItems(user?.id);
-      if (response.success) {
-        setCartItems(response.data);
-      } else {
-        return false;
-      }
-    }
-    extractAllCartItems();
-  }, [user]);
+
   return (
     <>
       <nav className="w-full h-20 bg-white fixed top-0 left-0 z-20 border-b border-gray-200">
@@ -100,15 +90,20 @@ export default function Navbar() {
           <div className="flex md:order-2 gap-2">
             {!isAdminView && isAuthUser ? (
               <>
-                <button className="navButton">Account</button>
+                <button
+                  className="navButton"
+                  onClick={() => {
+                    router.push("/account");
+                    setShowCartModal(false);
+                  }}
+                >
+                  Account
+                </button>
                 <button
                   className="navButton"
                   onClick={() => setShowCartModal((prev) => (prev = !prev))}
                 >
                   Cart
-                  <span className="inline-flex ml-2 items-center justify-center text-white rounded-full w-4 h-4 bg-red-500 text-[10px]">
-                    {setCartItems.length}
-                  </span>
                 </button>
               </>
             ) : null}

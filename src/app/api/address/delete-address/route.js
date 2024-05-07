@@ -28,7 +28,7 @@ export async function DELETE(req) {
       if (deleteAddress) {
         return NextResponse.json({
           success: true,
-          data: "address is deleted successfully",
+          message: "address is deleted successfully",
         });
       } else {
         return NextResponse.json({

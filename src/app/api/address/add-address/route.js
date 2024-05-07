@@ -1,6 +1,7 @@
 import { AuthUser } from "@/authUser/AuthUser";
 import connectToDb from "@/database";
 import Address from "@/models/address";
+import Joi from "joi";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -16,6 +17,7 @@ connectToDb();
 export async function POST(req) {
   try {
     const authenticatedUser = await AuthUser(req);
+
     if (authenticatedUser) {
       const data = await req.json();
 
