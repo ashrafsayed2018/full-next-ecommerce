@@ -17,11 +17,10 @@ export async function addNewAddress(formData) {
     console.log(error);
   }
 }
-export async function getAdress(id) {
-  console.log(id, "this is an address id");
+export async function getAdress(userId) {
   try {
     const response = await fetch(
-      `${BASE_API_URL}/api/address/get-address?id=${id}`,
+      `${BASE_API_URL}/api/address/get-address?id=${userId}`,
       {
         method: "GET",
         headers: {

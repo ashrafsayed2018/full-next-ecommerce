@@ -24,7 +24,7 @@ export async function GET(req) {
         message: "sorry you are not authenticated",
       });
     } else {
-      const address = await Address.find({ userID: id });
+      const address = await Address.findOne({ userID: id });
       if (address) {
         return NextResponse.json({
           success: true,

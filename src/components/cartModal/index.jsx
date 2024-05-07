@@ -63,6 +63,10 @@ export default function CartModal() {
             Go to Cart
           </button>
           <button
+            onClick={() => {
+              router.push("/checkout");
+              setShowCartModal(false);
+            }}
             className="navButton disabled:opacity-60 disabled:cursor-not-allowed"
             disabled={cartItems && cartItems.length == 0}
           >
@@ -80,7 +84,7 @@ export default function CartModal() {
         cartItems && cartItems.length > 0 ? (
           <ul role="list" className="-my-6 divide-y divide-gray-200">
             {cartItems.map((cartItem) => (
-              <li key={cartItem.id} className="flex py-6">
+              <li key={cartItem._id} className="flex py-6">
                 <div className="w-24 h-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                   <img
                     src={cartItem.productID.imageUrl}

@@ -3,7 +3,14 @@ import Cookies from "js-cookie";
 import { createContext, useEffect, useState } from "react";
 
 export const GlobalContext = createContext(null);
-
+export const initialCheckoutFormData = {
+  shippingAddress: {},
+  paymentMethod: "",
+  totalPrice: 0,
+  isPaid: false,
+  paidAt: new Date(),
+  isProcessing: true,
+};
 export default function GlobalState({ children }) {
   const [showNavModal, setShowNavModal] = useState(false);
   const [showCartModal, setShowCartModal] = useState(false);
@@ -14,11 +21,11 @@ export default function GlobalState({ children }) {
   const [isAuthUser, setIsAuthUser] = useState(false);
 
   // user state
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   // cart items state
   const [cartItems, setCartItems] = useState([]);
   // address state
-  const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState({});
   const [addressFormData, setAddressFormData] = useState({
     fullName: "",
     address: "",
@@ -27,15 +34,30 @@ export default function GlobalState({ children }) {
     postalCode: "",
   });
 
+  const [checkoutFormData, setCheckoutFormData] = useState(
+    initialCheckoutFormData
+  );
+
   useEffect(() => {
     if (Cookies.get("token") !== undefined) {
       setIsAuthUser(true);
       const userData = JSON.parse(localStorage.getItem("user")) || {};
-      setUser(userData);
+      const getCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      // setCartItems(getCartItems);
+      // setUser(userData);
+      // Check if user data has changed
+      if (JSON.stringify(userData) !== JSON.stringify(user)) {
+        setUser(userData);
+      }
+
+      // Check if cart items have changed
+      if (JSON.stringify(getCartItems) !== JSON.stringify(cartItems)) {
+        setCartItems(getCartItems);
+      }
     } else {
       setIsAuthUser(false);
     }
-  }, [Cookies]);
+  }, [Cookies, user]);
   return (
     <GlobalContext.Provider
       value={{
@@ -57,6 +79,8 @@ export default function GlobalState({ children }) {
         setAddress,
         addressFormData,
         setAddressFormData,
+        checkoutFormData,
+        setCheckoutFormData,
       }}
     >
       {children}

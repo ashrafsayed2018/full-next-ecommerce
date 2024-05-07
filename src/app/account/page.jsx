@@ -31,8 +31,8 @@ export default function AccountPage() {
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [currentEditedAddressId, setCurrentEditedAddressId] = useState(null);
   const [isUpdateState, setIsUpdateState] = useState(false);
-
   // add or update address method
+
   async function handleAddOrUpdateAddress() {
     setLoader({ loading: true, id: "" });
 
@@ -49,6 +49,7 @@ export default function AccountPage() {
     if (response.success) {
       setLoader({ loading: false, id: "" });
       toast.success(response.message);
+
       setAddressFormData({
         fullName: "",
         address: "",
@@ -73,7 +74,7 @@ export default function AccountPage() {
       setPageLoader(false);
       setAddress(response.data);
     } else {
-      setPageLoader(true);
+      setPageLoader(false);
     }
   }
   async function handleUpdateAddressButton(currentAddress) {
@@ -95,14 +96,18 @@ export default function AccountPage() {
     if (response.success) {
       setLoader({ loading: false, id: "" });
       toast.success(response.message);
+      setAddress({});
+      await getAddress();
     } else {
       toast.error(response.message);
       setLoader({ loading: false, id: "" });
+      await getAddress();
     }
-    await getAddress();
   }
   useEffect(() => {
-    if (user !== null) getAddress();
+    if (user != null) {
+      getAddress();
+    }
   }, [user]);
   return (
     <section className="">
@@ -135,21 +140,21 @@ export default function AccountPage() {
                 <div className="mt-6">
                   <h1 className="font-bold text-lg">Address</h1>
                   <div className="mt-4">
-                    {address && address.length ? (
+                    {Object.keys(address).length > 0 ? (
                       <div className="border p-6">
-                        <p>name: {address[0].fullName}</p>
-                        <p>country: {address[0].country} </p>
-                        <p>city: {address[0].city}</p>
-                        <p>postal code:{address[0].postalCode} </p>
-                        <p>address: {address[0].address}</p>
+                        <p>name: {address.fullName}</p>
+                        <p>country: {address.country} </p>
+                        <p>city: {address.city}</p>
+                        <p>postal code:{address.postalCode} </p>
+                        <p>address: {address.address}</p>
                         <button
                           className="navButton w-40 mr-2 bg-blue-500"
-                          onClick={() => handleUpdateAddressButton(address[0])}
+                          onClick={() => handleUpdateAddressButton(address)}
                         >
                           {loader &&
                           loader.loading &&
                           isUpdateState &&
-                          loader.id === address[0]._id ? (
+                          loader.id === address._id ? (
                             <TextLoader
                               text="updating"
                               color="white"
@@ -161,11 +166,12 @@ export default function AccountPage() {
                         </button>
                         <button
                           className="navButton w-40 mr-2 bg-red-500"
-                          onClick={() => handleDeleteAddress(address[0]._id)}
+                          onClick={() => handleDeleteAddress(address._id)}
                         >
                           {loader &&
                           loader.loading &&
-                          loader.id == address[0]._id ? (
+                          !isUpdateState &&
+                          loader.id == address._id ? (
                             <TextLoader
                               text="Deleting"
                               color="white"
@@ -177,12 +183,12 @@ export default function AccountPage() {
                         </button>
                       </div>
                     ) : (
-                      <p>no address found please add address</p>
+                      <p>No address found please add address</p>
                     )}
                   </div>
                 </div>
 
-                {address && address.length == 0 ? (
+                {Object.keys(address).length === 0 ? (
                   <div className="mt-4">
                     <button
                       className="navButton w-60"
@@ -197,7 +203,7 @@ export default function AccountPage() {
                   </div>
                 ) : null}
                 {/* add address form  */}
-                {(showAddressForm && address != null && address.length == 0) ||
+                {(showAddressForm && Object.keys(address).length === 0) ||
                 isUpdateState ? (
                   <div className="flex flex-col mt-5 justify-center pt-4 items-center">
                     <div className="w-full mt-6 mr-0 mb-0 ml-0 space-y-8">
