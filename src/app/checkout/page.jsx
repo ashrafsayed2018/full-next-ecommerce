@@ -3,8 +3,10 @@ import { GlobalContext } from "@/context";
 import { getToatalCartPrice } from "@/helpers/getTotalCartPrice";
 import { getPriceAfterDiscount } from "@/helpers/priceAfterDiscount";
 import { getAdress } from "@/services/address";
+import { callStripeSession } from "@/services/stripe";
+import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function CheckoutPage() {
   const {
@@ -16,13 +18,41 @@ export default function CheckoutPage() {
     setCheckoutFormData,
   } = useContext(GlobalContext);
 
+  const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
   const router = useRouter();
 
+  const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
+  const stripePromise = loadStripe(stripePublishableKey);
   async function getAddress() {
     const response = await getAdress(user?.id);
     if (response.success) {
       setAddress(response.data);
     }
+  }
+
+  async function handleCheckout() {
+    const stripe = await stripePromise;
+    const createLineItems = cartItems.map((item) => ({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          images: [item.productID.imageUrl],
+          name: item.productID.name,
+        },
+        unit_amount: item.productID.price * 100,
+      },
+      quantity: 1,
+    }));
+    const response = await callStripeSession(createLineItems);
+
+    setIsPaymentProcessing(true);
+    localStorage.setItem("stripe", true);
+    localStorage.setItem("checkoutFormData", JSON.stringify(checkoutFormData));
+
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: response.id,
+    });
+    console.log(error);
   }
   useEffect(() => {
     if (user.id) {
@@ -128,7 +158,7 @@ export default function CheckoutPage() {
               <button
                 disabled={Object.keys(cartItems).length == 0}
                 className="navButton disabled:opacity-50 disabled:cursor-pointer"
-                onClick={() => router.push("/account")}
+                onClick={() => handleCheckout}
               >
                 Checkout
               </button>
