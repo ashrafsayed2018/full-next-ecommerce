@@ -31,6 +31,7 @@ export default function CheckoutPage() {
   }
 
   async function handleCheckout() {
+    console.log("hello checkoutFormData");
     const stripe = await stripePromise;
     const createLineItems = cartItems.map((item) => ({
       price_data: {
@@ -49,6 +50,7 @@ export default function CheckoutPage() {
     localStorage.setItem("stripe", true);
     localStorage.setItem("checkoutFormData", JSON.stringify(checkoutFormData));
 
+    console.log("response", response);
     const { error } = await stripe.redirectToCheckout({
       sessionId: response.id,
     });
@@ -158,7 +160,7 @@ export default function CheckoutPage() {
               <button
                 disabled={Object.keys(cartItems).length == 0}
                 className="navButton disabled:opacity-50 disabled:cursor-pointer"
-                onClick={() => handleCheckout}
+                onClick={() => handleCheckout()}
               >
                 Checkout
               </button>

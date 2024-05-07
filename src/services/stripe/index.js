@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 const { BASE_API_URL } = require("@/utils/constants");
 
 export async function callStripeSession(fromData) {
@@ -8,7 +10,7 @@ export async function callStripeSession(fromData) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
-      body: JSON.stringify(FormData),
+      body: JSON.stringify(fromData),
     });
 
     const data = await response.json();
