@@ -17,14 +17,6 @@ export async function POST(req) {
         cancel_url: "http://localhost:3000/checkout" + "?status=cancel",
       });
 
-      //   const session = await stripe.checkout.sessions.create({
-      //     payment_method_types: ["card"],
-      //     line_items: response,
-      //     mode: "payment",
-      //     success_url: "http://localhost:3000/checkout" + "?status=success",
-      //     cancel_url: "http://localhost:3000/checkout" + "?status=cancel",
-      //   });
-
       return NextResponse.json({
         status: 204,
         success: true,

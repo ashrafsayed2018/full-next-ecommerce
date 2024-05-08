@@ -31,7 +31,6 @@ export default function CheckoutPage() {
   }
 
   async function handleCheckout() {
-    console.log("hello checkoutFormData");
     const stripe = await stripePromise;
     const createLineItems = cartItems.map((item) => ({
       price_data: {
@@ -50,7 +49,6 @@ export default function CheckoutPage() {
     localStorage.setItem("stripe", true);
     localStorage.setItem("checkoutFormData", JSON.stringify(checkoutFormData));
 
-    console.log("response", response);
     const { error } = await stripe.redirectToCheckout({
       sessionId: response.id,
     });
