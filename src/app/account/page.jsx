@@ -4,13 +4,13 @@ import { GlobalContext } from "@/context";
 import {
   addNewAddress,
   deleteAddress,
-  getAdress,
+  getAddress,
   updateAddress,
 } from "@/services/address";
 import Notification from "@/components/toastNotification/index";
 
 import { addNewAddressFormControls } from "@/utils";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import TextLoader from "@/components/loader/textLoader";
 import { PulseLoader } from "react-spinners";
@@ -66,17 +66,19 @@ export default function AccountPage() {
     }
   }
 
-  async function getAddress() {
-    setPageLoader(true);
-    const response = await getAdress(user?.id);
+  useCallback(() => {
+    async function getAddress() {
+      setPageLoader(true);
+      const response = await getAddress(user?.id);
 
-    if (response.success) {
-      setPageLoader(false);
-      setAddress(response.data);
-    } else {
-      setPageLoader(false);
+      if (response.success) {
+        setPageLoader(false);
+        setAddress(response.data);
+      } else {
+        setPageLoader(false);
+      }
     }
-  }
+  }, []);
   async function handleUpdateAddressButton(currentAddress) {
     setShowAddressForm(true);
     setIsUpdateState(true);

@@ -17,7 +17,10 @@ export async function POST(req) {
     if (authenticatedUser) {
       const data = await req.json();
 
-      const { productID, userID } = data;
+      const userID = authenticatedUser.id;
+
+      const { productID } = data;
+      const finalData = { ...data, userID };
       const { error } = AddToCart.validate({ userID, productID });
 
       if (error) {
@@ -34,7 +37,7 @@ export async function POST(req) {
             "this product already exists in the cart please add different product to the cart",
         });
       }
-      const saveProductToCart = await Cart.create(data);
+      const saveProductToCart = await Cart.create(finalData);
       if (saveProductToCart) {
         return NextResponse.json({
           success: true,

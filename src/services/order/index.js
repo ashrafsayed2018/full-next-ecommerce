@@ -1,9 +1,9 @@
 import { BASE_API_URL } from "@/utils/constants";
 import Cookies from "js-cookie";
 
-export async function addNewAddress(formData) {
+export async function createNewOrder(formData) {
   try {
-    const response = await fetch(`${BASE_API_URL}/api/address/add-address`, {
+    const response = await fetch(`${BASE_API_URL}/api/order/create-order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -12,15 +12,16 @@ export async function addNewAddress(formData) {
       body: JSON.stringify(formData),
     });
     const data = await response.json();
+    console.log("data from create order services", data);
     return data;
   } catch (error) {
     console.log(error);
   }
 }
-export async function getAddress(userId) {
+export async function getAllUserOrder(userId) {
   try {
     const response = await fetch(
-      `${BASE_API_URL}/api/address/get-address?id=${userId}`,
+      `${BASE_API_URL}/api/order/get-all-orders?id=${userId}`,
       {
         method: "GET",
         headers: {
@@ -34,28 +35,12 @@ export async function getAddress(userId) {
     console.log(error);
   }
 }
-export async function updateAddress(formData) {
-  try {
-    const response = await fetch(`${BASE_API_URL}/api/address/update-address`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Cookies.get("token")}`,
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-export async function deleteAddress(id) {
+export async function getOrderDetails(orderId) {
   try {
     const response = await fetch(
-      `${BASE_API_URL}/api/address/delete-address?id=${id}`,
+      `${BASE_API_URL}/api/order/order-details?id=${orderId}`,
       {
-        method: "DELETE",
+        method: "GET",
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
         },

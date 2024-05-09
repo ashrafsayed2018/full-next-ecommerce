@@ -33,7 +33,7 @@ export default function ProductDetails({ product }) {
           <div className="lg:col-span-3 lg:row-end-1">
             <div className="lg:flex items-start">
               <div className="lg:order-2 lg:ml-5">
-                <div className="max-w-xl overflow-hidden rounded-lg">
+                <div className="max-w-xl h-[500px] overflow-hidden rounded-lg">
                   <img
                     src={product.imageUrl}
                     className="w-full h-full object-cover"
@@ -43,7 +43,7 @@ export default function ProductDetails({ product }) {
               </div>
               {/*  product 2 images */}
               <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
-                <flex className="flex-row items-start lg:flex-col">
+                <div className="flex-row items-start lg:flex-col">
                   <button
                     type="button"
                     className="flex-shrink-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-200 text-center"
@@ -64,7 +64,7 @@ export default function ProductDetails({ product }) {
                       alt={product.name}
                     />
                   </button>
-                </flex>
+                </div>
               </div>
             </div>
           </div>

@@ -37,7 +37,6 @@ export default function CardButton({ item }) {
     setLoader({ loading: true, id: product._id });
     const response = await addToCart({
       productID: product._id,
-      userID: user.id,
     });
     if (response.success) {
       toast.success(response.message);
@@ -80,7 +79,14 @@ export default function CardButton({ item }) {
       </button>
     </>
   ) : (
-    <button className="card-button" onClick={() => handleAddToCart(item)}>
+    <button
+      className="card-button"
+      onClick={() =>
+        Object.keys(user).length > 0
+          ? handleAddToCart(item)
+          : router.push("/login")
+      }
+    >
       {loader && loader.loading && loader.id == item._id ? (
         <TextLoader text="adding to cart ..." loading={loader} color="white" />
       ) : (

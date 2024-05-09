@@ -34,6 +34,7 @@ export default function CartModal() {
   }
   async function extractAllCartItems() {
     const response = await getAllCartItems(user?.id);
+    console.log(user, "from cart modal");
     if (response.success) {
       setCartItems(response.data);
       localStorage.setItem("cartItems", JSON.stringify(response.data));
