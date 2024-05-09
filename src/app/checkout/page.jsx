@@ -27,7 +27,7 @@ export default function CheckoutPage() {
   const [orderSuccess, setOrderSuccess] = useState(false);
 
   const router = useRouter();
-  const { searchParams } = useSearchParams();
+  const searchParams = useSearchParams();
 
   const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
   const stripePromise = loadStripe(stripePublishableKey);
