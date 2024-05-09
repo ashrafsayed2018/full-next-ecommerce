@@ -12,8 +12,9 @@ export async function PUT(req) {
 
     if (authanticatedUser?.role == "admin") {
       const data = await req.json();
+
       const {
-        id,
+        _id,
         shippingAddress,
         orderItems,
         paymentMethod,
@@ -22,7 +23,7 @@ export async function PUT(req) {
         isProcessing,
       } = data;
       const updateOrder = await Order.findOneAndUpdate(
-        { _id: id },
+        { _id: _id },
         {
           shippingAddress,
           orderItems,

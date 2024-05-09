@@ -12,7 +12,6 @@ export async function createNewOrder(formData) {
       body: JSON.stringify(formData),
     });
     const data = await response.json();
-    console.log("data from create order services", data);
     return data;
   } catch (error) {
     console.log(error);
@@ -76,16 +75,16 @@ export async function getAllUsersOrders() {
 
 // get update order for admin only
 
-export async function updateOrderStatus(formData) {
+export async function updateOrderStatus(order) {
   try {
     const response = await fetch(
-      `${BASE_API_URL}/api/admin/orders/update-orders-status`,
+      `${BASE_API_URL}/api/admin/orders/update-order-status`,
       {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(order),
       }
     );
     const data = await response.json();

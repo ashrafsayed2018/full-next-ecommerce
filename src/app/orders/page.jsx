@@ -57,11 +57,11 @@ export default function Orders() {
             <div className="px-4 py-6 sm:px-8 sm:py-10">
               <div className="flow-root">
                 {allOrdersForUser && allOrdersForUser.length ? (
-                  <ul className="flex flex-col gap-4">
+                  <ul className="flex flex-col gap-4 overflow-x-auto">
                     {allOrdersForUser.map((item) => (
                       <li
                         key={item._id}
-                        className="bg-gray-200 shadow p-5 flex flex-col space-y-3 py-6 text-left"
+                        className="bg-gray-200 shadow p-5 flex flex-col space-y-3 py-6 text-left overflow-x-auto"
                       >
                         <div className="flex">
                           <h1 className="font-bold text-lg mb-3 flex-1">
