@@ -1,6 +1,9 @@
 import { required } from "joi";
 import mongoose from "mongoose";
 
+import User from "./user";
+import Product from "./product";
+
 const OrderSchema = mongoose.Schema(
   {
     user: {

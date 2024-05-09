@@ -52,3 +52,45 @@ export async function getOrderDetails(orderId) {
     console.log(error);
   }
 }
+
+// get all users order for admin only
+
+export async function getAllUsersOrders() {
+  try {
+    const response = await fetch(
+      `${BASE_API_URL}/api/admin/orders/get-all-orders`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// get update order for admin only
+
+export async function updateOrderStatus(formData) {
+  try {
+    const response = await fetch(
+      `${BASE_API_URL}/api/admin/orders/update-orders-status`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -24,7 +24,6 @@ export default function Orders() {
     const res = await getAllUserOrder(user?.id);
     if (res.success) {
       setPageLoader(false);
-
       setAllOrdersForUser(res.data);
       toast.success(res.message);
     } else {

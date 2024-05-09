@@ -43,6 +43,7 @@ export default function GlobalState({ children }) {
   const [cartItems, setCartItems] = useState([]);
   // address state
   const [address, setAddress] = useState({});
+  const [orderDetails, setOrderDetails] = useState(null);
   const [addressFormData, setAddressFormData] = useState({
     fullName: "",
     address: "",
@@ -81,28 +82,29 @@ export default function GlobalState({ children }) {
     }
   }, [Cookies]);
 
-  useEffect(() => {
-    console.log(Object.keys(user).length > 0, "path name");
-    //  if the user is not logged in
-    if (
-      user &&
-      Object.keys(user).length === 0 &&
-      protectedRoutes.indexOf(pathName) > -1
-    )
-      router.push("/login");
-  }, [user, pathName]);
+  // useEffect(() => {
+  //   //  if the user is not logged in
+  //   if (
+  //     user &&
+  //     Object.keys(user).length === 0 &&
+  //     protectedRoutes.indexOf(pathName) > -1
+  //   ) {
+  //     return router.push("/login");
+  //   }
+  // }, [user, pathName]);
 
-  useEffect(() => {
-    // if the user is not admin
-    if (
-      user != null &&
-      user &&
-      Object.keys(user).length > 0 &&
-      protectedAdminRoutes.indexOf(pathName) > -1 &&
-      user.role != "admin"
-    )
-      router.push("/unauthorized");
-  }, [user, pathName]);
+  // useEffect(() => {
+  //   // if the user is not admin
+  //   if (
+  //     user != null &&
+  //     user &&
+  //     Object.keys(user).length > 0 &&
+  //     protectedAdminRoutes.indexOf(pathName) > -1 &&
+  //     user.role != "admin"
+  //   ) {
+  //     return router.push("/unauthorized");
+  //   }
+  // }, [user, pathName]);
   return (
     <GlobalContext.Provider
       value={{
@@ -128,6 +130,8 @@ export default function GlobalState({ children }) {
         setCheckoutFormData,
         allOrdersForUser,
         setAllOrdersForUser,
+        orderDetails,
+        setOrderDetails,
       }}
     >
       {children}

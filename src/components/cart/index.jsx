@@ -1,8 +1,15 @@
+"use client";
 import { getPriceAfterDiscount } from "@/helpers/priceAfterDiscount";
 import TextLoader from "../loader/textLoader";
+import { useContext } from "react";
+
 import { getToatalCartPrice } from "@/helpers/getTotalCartPrice";
+import { GlobalContext } from "../../context";
+import { useRouter } from "next/navigation";
 
 export default function Cart({ cartItems = [], handleDeleteItem, loader }) {
+  const router = useRouter();
+  const { user } = useContext(GlobalContext);
   return (
     <section className="h-screen bg-gray-100">
       <div className="mx-auto px-4 sm:6 lg:px-8">
@@ -12,9 +19,9 @@ export default function Cart({ cartItems = [], handleDeleteItem, loader }) {
               <div className="flow-root">
                 {cartItems && cartItems.length ? (
                   <ul className="my-8">
-                    {cartItems.map((cartItem) => (
+                    {cartItems.map((cartItem, index) => (
                       <li
-                        key={cartItem.id}
+                        key={index}
                         className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0"
                       >
                         <div className="shrink-0">
@@ -90,6 +97,10 @@ export default function Cart({ cartItems = [], handleDeleteItem, loader }) {
 
                 <div className="mt-5 text-center">
                   <button
+                    onClick={() => {
+                      router.push("/checkout");
+                      console.log(user, "user from cart ");
+                    }}
                     className="navButton disabled:cursor-not-allowed disabled:opacity-60"
                     disabled={cartItems && cartItems.length == 0}
                   >

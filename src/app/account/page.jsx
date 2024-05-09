@@ -14,8 +14,10 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import TextLoader from "@/components/loader/textLoader";
 import { PulseLoader } from "react-spinners";
+import { useRouter } from "next/navigation";
 
 export default function AccountPage() {
+  const router = useRouter();
   const {
     user,
     address,
@@ -66,10 +68,11 @@ export default function AccountPage() {
     }
   }
 
-  useCallback(() => {
-    async function getAddress() {
+  useEffect(() => {
+    async function getUserAddress() {
       setPageLoader(true);
       const response = await getAddress(user?.id);
+      console.log(response.success, "Success");
 
       if (response.success) {
         setPageLoader(false);
@@ -78,6 +81,7 @@ export default function AccountPage() {
         setPageLoader(false);
       }
     }
+    getUserAddress();
   }, []);
   async function handleUpdateAddressButton(currentAddress) {
     setShowAddressForm(true);
@@ -137,7 +141,12 @@ export default function AccountPage() {
                   <p>{user?.email}</p>
                   <p>{user?.role}</p>
                 </div>
-                <button className="navButton w-60">view your orders</button>
+                <button
+                  className="navButton w-60"
+                  onClick={() => router.push("/orders")}
+                >
+                  view your orders
+                </button>
 
                 <div className="mt-6">
                   <h1 className="font-bold text-lg">Address</h1>
