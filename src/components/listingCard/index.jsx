@@ -6,6 +6,7 @@ import CardTile from "./cartTile";
 import { useEffect } from "react";
 
 export default function ListingCard({ allProducts }) {
+  console.log(allProducts);
   const router = useRouter();
   useEffect(() => router.refresh(), [router]);
   return (

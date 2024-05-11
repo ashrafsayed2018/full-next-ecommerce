@@ -1,13 +1,14 @@
 "use client";
 import { GlobalContext } from "@/context";
-import { adminNavOptions, navOptions } from "@/utils";
-import { useContext, useEffect } from "react";
+import { adminNavOptions, NavbarLinks, navOptions } from "@/utils";
+import { useContext, useEffect, useState } from "react";
 import CommonModal from "../commonModal";
 import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import CartModal from "../cartModal";
 import { getAllCartItems } from "@/services/cart";
+import Image from "next/image";
 
 function NavItems({ isModalView = false, isAdminView, router, pathName }) {
   return (
@@ -59,6 +60,7 @@ export default function Navbar() {
     setShowCartModal,
     setCartItems,
   } = useContext(GlobalContext);
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const pathName = usePathname();
   const isAdminView = pathName.includes("/admin-view");

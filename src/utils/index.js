@@ -25,10 +25,18 @@ export const navOptions = [
     path: "/product/listings/kids",
   },
 ];
-export const styles = {
-  button:
-    "mt-1.5 inline-block bg-red-800 px-5 py-3 font-medium uppercase tracking-wide text-white",
-};
+export const NavbarLinks = [
+  {
+    id: 1,
+    name: "معلومات عنا",
+    href: "/",
+  },
+  {
+    id: 2,
+    name: "اتصل بنا",
+    href: "/",
+  },
+];
 export const adminNavOptions = [
   {
     id: "adminListing",
